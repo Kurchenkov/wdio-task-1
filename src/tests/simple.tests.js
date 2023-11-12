@@ -41,4 +41,14 @@ describe('Steam page', () => {
         await searchBtn.click();
         expect(await searchResults.getText()).to.be.equal(gameName);
     });
+
+    it('Subscriber agreement', async () => {
+        const subscriberLink = await $('//div[@id="footer_text"]//a[contains(@href,"subscriber_agreement")]');
+        await subscriberLink.click();
+        await browser.switchWindow('Соглашение подписчика Steam');
+        const englishFlagIcon = await $('//a[contains(@href,"subscriber_agreement/english")]');
+        await englishFlagIcon.click();
+        const titleLocator = await $('//div[@id="ssa_body"]/h3');
+        expect(await titleLocator.getText()).to.match(/agreement$/gmi);
+    });
 });
